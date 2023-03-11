@@ -1,0 +1,52 @@
+/.angular/cache
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+*~
+*.sw[mnpcod]
+.tmp
+*.tmp
+*.tmp.*
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+.gradle
+resources
+e2e
+build
+Thumbs.db
+UserInterfaceState.xcuserstate
+$RECYCLE.BIN/
+
+# excludes everything inside the folder
+www/
+# but do not exclude .gitkeep file, so the folder can be checked into the repository
+!www/.gitkeep
+
+*.log
+log.txt
+npm-debug.log*
+
+/.idea
+/.ionic
+/.sass-cache
+/.sourcemaps
+/.versions
+/.vscode
+/coverage
+/dist
+/node_modules
+/platforms
+/plugins
+/www
+
+# Environment variables
+src/environments/environment.prod.ts
+src/environments/environment.stage.ts
+src/environments/environment.ts
+
+# Cordova
+typings/
+
+# Server
+server/

@@ -1,0 +1,11 @@
+<div>
+    <video #video autoplay [width]="width" [height]="height" autoplay muted playsinline></video>
+    <div style="float: left;">
+        <button (click)="player()">Player</button>
+        <button (click)="stop()">Stop</button>
+        <button (click)="getSnapshot(1050, 1050)">Capture</button>
+        <button (click)="download()">Download</button>
+    </div>
+    <img #img src="../../assets/output.png">
+</div>
+ 
