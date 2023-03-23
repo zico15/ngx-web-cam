@@ -1,52 +1,44 @@
-/.angular/cache
-# Specifies intentionally untracked files to ignore when using Git
-# http://git-scm.com/docs/gitignore
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-*~
-*.sw[mnpcod]
-.tmp
-*.tmp
-*.tmp.*
-*.sublime-project
-*.sublime-workspace
-.DS_Store
-.gradle
-resources
-e2e
-build
-Thumbs.db
-UserInterfaceState.xcuserstate
-$RECYCLE.BIN/
-
-# excludes everything inside the folder
-www/
-# but do not exclude .gitkeep file, so the folder can be checked into the repository
-!www/.gitkeep
-
-*.log
-log.txt
-npm-debug.log*
-
-/.idea
-/.ionic
-/.sass-cache
-/.sourcemaps
-/.versions
-/.vscode
-/coverage
+# Compiled output
 /dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
 /node_modules
-/platforms
-/plugins
-/www
+npm-debug.log
+yarn-error.log
 
-# Environment variables
-src/environments/environment.prod.ts
-src/environments/environment.stage.ts
-src/environments/environment.ts
+.vscode
+projects/ngx-web-cam/node_modules/
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# Cordova
-typings/
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
 
-# Server
-server/
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
