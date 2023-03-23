@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import jsQR from 'jsqr';
 
+
 export type facingMode = 'user' | 'environment';
 
 export const resolutions = {
@@ -88,7 +89,7 @@ export class WebCamComponent {
     this.context = this.canvas.nativeElement.getContext('2d', {
       willReadFrequently: true,
     });
-    if (this.scanner.observed)
+    if (this.scanner.observers.length > 0)
       this.video.nativeElement.addEventListener('timeupdate', this.updateScanner.bind(this));
     if (this.autoplay) this.player();
   }
@@ -99,7 +100,7 @@ export class WebCamComponent {
   }
 
   public ontoggleFacingMode() {
-    this.setFacingMode(this.facingMode === 'user'  ? 'environment' : 'user');
+    this.setFacingMode(this.facingMode === 'user' ? 'environment' : 'user');
   }
 
   public setFacingMode(value: facingMode) {
@@ -137,6 +138,7 @@ export class WebCamComponent {
 
   ngOnDestroy() {
     this.stop();
+
   }
 
   private setStream(stream: MediaStream) {
@@ -148,6 +150,7 @@ export class WebCamComponent {
   }
 
   private initMedia() {
+    
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices
         .getUserMedia({
@@ -155,6 +158,7 @@ export class WebCamComponent {
             facingMode: this.facingMode,
             width: { ideal: this.resolution.width },
             height: { ideal: this.resolution.height },
+            
             frameRate: this.frameRate,
             // Configurações do flash
           advanced: [
