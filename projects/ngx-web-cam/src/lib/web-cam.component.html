@@ -6,19 +6,19 @@
     playsinline
     width="100%"
     height="100%"
-    style="top: 25px; position: relative"
+    class="video_stream"
   ></video>
   <canvas #canvas style="visibility: hidden"></canvas>
 
   <div class="floor">
     <button
-      (click)="ontoggleVideo()"
+      (click)="onToggleTorch()"
       style="height: 90%; width: 33%; position: relative; top: 5%"
     >
       Player
     </button>
     <button
-      (click)="ontoggleFacingMode()"
+      (click)="ontoggleCamera()"
       style="height: 90%; width: 33%; position: relative; top: 5%"
     >
       Camera
@@ -41,8 +41,8 @@
     height: 85%;
   }
 
-  .video {
-    position: absolute;
+  .video_stream {
+    position: relative;
     top: 0;
     left: 0;
     bottom: 0;
