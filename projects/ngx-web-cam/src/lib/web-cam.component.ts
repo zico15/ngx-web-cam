@@ -80,9 +80,11 @@ export class WebCamComponent {
 	constructor() {
 	}
 
+	/**
+	 * MediaDevices support check and init camera
+	 * */
 	ngOnInit() {
-		const SUPPORTS_MEDIA_DEVICES = 'mediaDevices' in navigator;
-		if (SUPPORTS_MEDIA_DEVICES) {
+		if ('mediaDevices' in navigator) {
 			this.canvas.nativeElement.width = this.resolution.width;
 			this.canvas.nativeElement.height = this.resolution.height;
 			this.context = this.canvas.nativeElement.getContext('2d', {
@@ -97,7 +99,6 @@ export class WebCamComponent {
 					this.camera_index = this.cameras.length - 1;
 					if (this.autoplay) this.player();
 			});
-		
 		}
 	}
 
@@ -108,7 +109,6 @@ export class WebCamComponent {
 
 	public ontoggleCamera() {
 		this.camera_index = (this.camera_index + 1) % this.cameras.length;
-		console.log(this.camera_index);
 		this.stop();
 		this.player();
 	}
@@ -157,17 +157,17 @@ export class WebCamComponent {
 
 	/**
 	 * OnToggleTorch is used to turn on or off the torch of the camera.
+	 * Android are supported.
 	 * */
 	onToggleTorch() {
-		const track: any = this.stream?.getVideoTracks()[0];
-		this.isTorch = !this.isTorch;
-		track.applyConstraints({
-			advanced: [{torch: this.isTorch}]
-		}).then(() => {
-			this.isTorch = true;
-		}).catch(() => {
-			this.isTorch = false;
-		});
+		if (this.isTourchSupport)
+		{
+			const track: any = this.stream?.getVideoTracks()[0];
+			this.isTorch = !this.isTorch;
+			track.applyConstraints({
+				advanced: [{torch: this.isTorch}]
+			}).then(() => {})
+		}
 	}
 
 	ngOnDestroy() {
@@ -196,12 +196,14 @@ export class WebCamComponent {
 		this.video.nativeElement.srcObject = stream;
 		// removeTrack when stream ended to avoid memory leak
 		this.stream.addEventListener('ended', () => {if (this.videoTrack) this.stream?.removeTrack(this.videoTrack)});
-		try {
-			this.video.nativeElement.play();
-			const  capabilitie: any = this.videoTrack.getCapabilities();
-			this.isTourchSupport = capabilitie?.torch;
-		} catch (e) {
-			this.isTourchSupport = false;
+		if (/Android/i.test(navigator.userAgent)) {
+			try {
+				this.video.nativeElement.play();
+				const  capabilitie: any = this.videoTrack.getCapabilities();
+				this.isTourchSupport = capabilitie?.torch;
+			} catch (e) {
+				this.isTourchSupport = false
+			}
 		}
 	}
 
