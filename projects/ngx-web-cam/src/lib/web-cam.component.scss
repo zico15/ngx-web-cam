@@ -1,0 +1,73 @@
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  background: #000;
+  position: fixed;
+  top: 0px;
+  right: 0;
+  bottom: 0px;
+  left: 0;
+  z-index: -99;
+
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    object-fit: cover;
+  }
+}
+
+.footer {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  padding: 15px;
+  background: rgba(96, 96, 96, 0.5);
+  &-button {
+    &-galery {
+      margin: auto;
+      left: 50vw;
+      background-color: rgb(32, 32, 32);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+    }
+    &-takePicture {
+      margin: auto;
+      bottom: 20px;
+      left: 50vw;
+      background-color: rgb(255, 233, 233);
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+    }
+    &-changeCamera {
+      margin: auto;
+      bottom: 20px;
+      left: 50vw;
+      background-color: rgb(192, 33, 33);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+    }
+  }
+  .col-takePicture {
+    flex: 3;
+  }
+  .col {
+    flex: 1;
+  }
+}
