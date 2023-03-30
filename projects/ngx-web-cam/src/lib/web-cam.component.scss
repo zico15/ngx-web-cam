@@ -26,6 +26,23 @@ canvas {
   }
 }
 
+.header
+{
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  img {
+    margin: 10px;
+    border-radius: 50%;
+  }
+  .icone {
+    fill: #e6ee03; /* Substitua #ff0000 pela cor que você deseja usar */
+  }
+
+ 
+}
+
 .footer {
   position: fixed;
   display: flex;
