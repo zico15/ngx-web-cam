@@ -78,7 +78,11 @@ export class WebCamComponent {
 
 	public iconTorch = '../../assets/icons8-flash-off-24.svg';
 
-	@Output() scanner = new EventEmitter<{codeType: string; codeData: string;}>();
+	/**
+	{codeType: string, codeData: string}
+	 * 
+	 */
+	@Output() scanner = new EventEmitter<{ codeType: string, codeData:  string }>();
 	@Output() capture = new EventEmitter<string>();
 	@Output() onClose = new EventEmitter<any>();
 
@@ -92,11 +96,13 @@ export class WebCamComponent {
 			this.context = this.canvas.nativeElement.getContext('2d', {
 				willReadFrequently: true,
 			});
-			this.isScanner = this.scanner.length > 0;
+			this.isScanner = this.scanner.observed;
 			if (this.isScanner)
+			{	
+				this.resolution = resolutions['640x480'];
 				this.video.nativeElement.addEventListener('timeupdate', this.updateScanner.bind(this));
-	
-				navigator.mediaDevices.enumerateDevices().then(devices => {
+			}
+			navigator.mediaDevices.enumerateDevices().then(devices => {
 				this.cameras = devices.filter(device => device.kind === 'videoinput');
 				}).finally(() => { 
 					this.camera_index = this.cameras.length - 1;
@@ -149,9 +155,7 @@ export class WebCamComponent {
 	 * This method is called on each frame. It will try to find a QR code in the current frame.
 	 * */
 	private async updateScanner() {
-		this.context?.drawImage(
-			this.video.nativeElement, 0, 0, this.resolution.width, this.resolution.height
-		);
+		this.context?.drawImage(this.video.nativeElement, 0, 0, this.resolution.width, this.resolution.height);
 		this.imageData = this.context?.getImageData(0, 0, this.resolution.width, this.resolution.height);
 		const uint8ClampedArray = this.imageData?.data;
 		if (uint8ClampedArray) {
@@ -177,7 +181,7 @@ export class WebCamComponent {
 			track.applyConstraints({
 				advanced: [{torch: this.isTorch}]
 			}).then(() => {})
-			this.iconTorch = this.isTorch ? '../../assets/icons8-flash-on-24.svg' : '../../assets/icons8-flash-off-24.svg';
+			this.iconTorch = this.isTorch ? '../assets/icons8-flash-on-24.svg' : '../assets/icons8-flash-off-24.svg';
 		}
 	}
 
@@ -202,8 +206,8 @@ export class WebCamComponent {
 			this.video.nativeElement.style.setProperty('transform', 'scaleX(-1)');
 		else 
 			this.video.nativeElement.style.removeProperty('transform');
-		this.canvas.nativeElement.width = this.videoTrack.getSettings().width || this.width;
-		this.canvas.nativeElement.height = this.videoTrack.getSettings().height || this.height;
+		this.canvas.nativeElement.width = this.resolution.width;
+		this.canvas.nativeElement.height = this.resolution.height;
 		this.video.nativeElement.srcObject = stream;
 		// removeTrack when stream ended to avoid memory leak
 		this.stream.addEventListener('ended', () => {if (this.videoTrack) this.stream?.removeTrack(this.videoTrack)});
