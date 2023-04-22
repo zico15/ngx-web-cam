@@ -160,7 +160,7 @@ export class WebCamComponent {
     } else this.onSubmit.emit(this.images);
   }
 
-  openModal(i) {
+  openModal(i: string) {
     this.animation.moveScrollingWrapperBottom();
     this.imageModal = i;
   }
