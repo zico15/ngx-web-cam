@@ -1,10 +1,8 @@
 {
   "name": "ngx-webcam-controller",
-  "version": "0.0.9",
+  "version": "0.0.23",
   "author": "zico15",
-  "contributors": [
-    
-  ],
+  "contributors": [],
   "license": "MIT",
   "repository": {
     "type": "git",

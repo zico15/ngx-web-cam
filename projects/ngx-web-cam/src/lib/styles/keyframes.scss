@@ -1,0 +1,35 @@
+@keyframes moveDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(115px);
+  }
+}
+
+@keyframes moveUp {
+  from {
+    transform: translateY(115px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes gradual-blur {
+  from {
+    filter: blur(0);
+  }
+  to {
+    filter: blur(2.5px);
+  }
+}
+
+@keyframes rm-gradual-blur {
+  from {
+    filter: blur(2.5px);
+  }
+  to {
+    filter: blur(0px);
+  }
+}

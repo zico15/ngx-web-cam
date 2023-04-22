@@ -1,24 +1,73 @@
 <div class="content">
-  <video #video autoplay muted playsinline></video>
-  <canvas #canvas style="visibility: hidden"></canvas>
-
-  <div class="header">
-    <img (click)="close()"  class="icone"  src="../assets/icons8-excluir-24.svg"/>
-    <img *ngIf="isTourchSupport" (click)="onToggleTorch()"  [src]="iconTorch"/>
+  <modal-image *ngIf="imageModal" [imageModal]="imageModal"> </modal-image>
+  <div class="header" *ngIf="isPhoto">
+    <img (click)="close()" class="close" src="assets/close-outline.svg" />
+    <img
+      [ngClass]="{
+        show: images.length,
+        hide: !images.length || this.imageModal
+      }"
+      class="upload"
+      src="assets/add-image.svg"
+      (click)="action()"
+    />
+    <img
+      [ngClass]="imageModal ? 'show' : 'hide'"
+      class="poubelle"
+      src="assets/poubelle.svg"
+      (click)="action()"
+    />
   </div>
 
-  <div class="footer">
-    <div class="col">
-      <div class="footer-button-galery" (click)="ontoggleVideo()"></div>
+  <!-- Video -->
+  <video #video autoplay muted playsinline></video>
+  <!-- Qrcode -->
+  <canvas #canvas style="visibility: hidden"></canvas>
+  <!-- See Images -->
+  <div class="scrolling-wrapper">
+    <div class="image" *ngFor="let i of images; let index = index">
+      <img
+        [src]="i"
+        (click)="openModal(i)"
+        style="object-fit: cover"
+        [ngClass]="i === this.imageModal ? 'img-selected' : ''"
+      />
     </div>
-    <div class="col-takePicture">
-      <div class="footer-button-takePicture" (click)="onCapture()"></div>
+  </div>
+
+  <div class="qrcode" *ngIf="isQr">
+    <div class="qrcode-square"></div>
+    <img
+      (click)="close()"
+      class="qrcode-close"
+      src="assets/close-outline.svg"
+    />
+  </div>
+
+  <div class="footer" *ngIf="isPhoto">
+    <div class="footer-button-galery" (click)="fileUpload.click()">
+      <img src="../../assets/choose-library.svg" />
+      <input
+        #fileUpload
+        type="file"
+        (change)="importFile($event)"
+        style="display: none"
+        accept="image/*"
+        multiple
+        [disabled]="hasMaxImages"
+      />
     </div>
-    <div class="col">
-      <div
-        class="footer-button-changeCamera"
-        (click)="ontoggleFacingMode()"
-      ></div>
+    <div
+      class="footer-button-takePicture"
+      (click)="onCapture()"
+      *ngIf="!hasMaxImages"
+    >
+      <div class="circle"></div>
+    </div>
+    <span *ngIf="hasMaxImages">Limite máximo atingido</span>
+
+    <div class="footer-button-changeCamera" (click)="ontoggleFacingMode()">
+      <img src="../../assets/change-camera.svg" />
     </div>
   </div>
 </div>

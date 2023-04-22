@@ -1,0 +1,22 @@
+.move-scrollWrapper-bottom {
+  animation-duration: 0.42s;
+  animation-fill-mode: forwards;
+  animation-name: moveDown;
+}
+.move-scrollWrapper-top {
+  animation-duration: 0.6s;
+  animation-fill-mode: forwards;
+  animation-name: moveUp;
+}
+
+.gradual-blur {
+  animation-duration: 0.42s;
+  animation-fill-mode: forwards;
+  animation-name: gradual-blur;
+}
+.rm-gradual-blur {
+  animation-duration: 0.6s;
+  animation-fill-mode: forwards;
+  animation-name: rm-gradual-blur;
+}
+
