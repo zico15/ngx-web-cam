@@ -280,8 +280,7 @@ export class WebCamComponent {
    * @param event
    * @returns
    **/
-  async importFile(event) {
-    console.log(event.target.files);
+  async importFile(event: any) {
     if (event.target.files.length == 0)
       return alert('Nenhum arquivo selecionado!');
     let files: File[] = event.target.files;
