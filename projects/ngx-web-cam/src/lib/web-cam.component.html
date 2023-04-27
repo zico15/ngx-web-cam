@@ -1,64 +1,70 @@
-<div>
-  <video #video
-    autoplay
-    autoplay
-    muted
-    playsinline
-    width="100%"
-    height="100%"
-    class="video_stream"
-  ></video>
-  <canvas #canvas style="visibility: hidden"></canvas>
+<div class="content">
+  <modal-image *ngIf="imageModal" [imageModal]="imageModal"> </modal-image>
+  <div class="header" *ngIf="isPhoto">
+    <svg-close (click)="close()"></svg-close>
+    <svg-upload
+      [ngClass]="{
+        show: images.length,
+        hide: !images.length || this.imageModal
+      }"
+      class="upload"
+      (click)="action()"
+    />
+    <svg-poubelle
+      [imageModal]="imageModal"
+      (click)="action()"
+    />
+  </div>
 
-  <div class="floor">
-    <button
-      (click)="onToggleTorch()"
-      style="height: 90%; width: 33%; position: relative; top: 5%"
-    >
-      Player
-    </button>
-    <button
-      (click)="ontoggleFacingMode()"
-      style="height: 90%; width: 33%; position: relative; top: 5%"
-    >
-      Camera
-    </button>
-    <button
+  <!-- Video -->
+  <video #video autoplay muted playsinline></video>
+  <!-- Qrcode -->
+  <canvas #canvas style="visibility: hidden"></canvas>
+  <!-- See Images -->
+  <div class="scrolling-wrapper">
+    <div class="image" *ngFor="let i of images; let index = index">
+      <img
+        [src]="i"
+        (click)="openModal(i)"
+        style="object-fit: cover"
+        [ngClass]="i === this.imageModal ? 'img-selected' : ''"
+      />
+    </div>
+  </div>
+
+  <div class="qrcode" *ngIf="isQr">
+    <div class="qrcode-square"></div>
+    <img
+      (click)="close()"
+      class="qrcode-close"
+      src="assets/close-outline.svg"
+    />
+  </div>
+
+  <div class="footer" *ngIf="isPhoto">
+    <div class="footer-button-galery" (click)="fileUpload.click()">
+      <svg-choose-library></svg-choose-library>
+      <input
+        #fileUpload
+        type="file"
+        (change)="importFile($event)"
+        style="display: none"
+        accept="image/*"
+        multiple
+        [disabled]="hasMaxImages"
+      />
+    </div>
+    <div
+      class="footer-button-takePicture"
       (click)="onCapture()"
-      style="height: 90%; width: 33%; position: relative; top: 5%"
+      *ngIf="!hasMaxImages"
     >
-      Save
-    </button>
+      <div class="circle"></div>
+    </div>
+    <span *ngIf="hasMaxImages">Limite máximo atingido</span>
+
+    <div class="footer-button-changeCamera" (click)="ontoggleFacingMode()">
+      <svg-change-camera></svg-change-camera>
+    </div>
   </div>
 </div>
-
-<style scoped>
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 85%;
-  }
-
-  .video_stream {
-    position: relative;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-    height: 100%;
-  }
-
-  .floor {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: rgba(0, 0, 0, 0.5);
-  }
-</style>
