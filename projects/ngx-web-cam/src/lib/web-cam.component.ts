@@ -39,7 +39,7 @@ export class WebCamComponent {
   @Input() imageQuality: number = 100;
 
   /** Flag to control whether the webcam is active or not. */
-  @Input() autoplay: boolean = false;
+  @Input() autoplay: boolean = true;
 
   /** type resolution
    * @example '640x480': { width: { ideal: 640}, height: { ideal: 480} },
