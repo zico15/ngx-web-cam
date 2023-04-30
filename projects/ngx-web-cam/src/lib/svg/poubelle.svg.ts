@@ -39,9 +39,9 @@ import { Component, Input } from '@angular/core';
     `
       .poubelle {
         position: absolute;
-        height: 7vw;
+        height: 10vw;
         padding: 8px;
-        margin-top: 2.4vh;
+        margin-top: 2.8vh;
         margin-right: 3.5vh;
         right: 0;
         border-radius: 50%;
@@ -65,5 +65,5 @@ import { Component, Input } from '@angular/core';
   ],
 })
 export class PoubelleSvg {
-  @Input() imageModal: string = '';
+  @Input() imageModal:  any = undefined;
 }

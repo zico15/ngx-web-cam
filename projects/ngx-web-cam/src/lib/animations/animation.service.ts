@@ -8,11 +8,11 @@ export class AnimationService {
     let takePicButton = document.querySelector(
       '.footer-button-takePicture'
     ) as HTMLElement;
+    takePicButton.style.width = '7vh';
+    takePicButton.style.height = '7vh';
+    await this.wait(120);
     takePicButton.style.width = '7.4vh';
     takePicButton.style.height = '7.4vh';
-    await this.wait(100);
-    takePicButton.style.width = '7.8vh';
-    takePicButton.style.height = '7.8vh';
   }
 
   async moveScrollingWrapperBottom() {

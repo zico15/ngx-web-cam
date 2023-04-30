@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./modal-image.component.scss'],
 })
 export class ModalImageComponent {
-  @Input() imageModal: string = '';
+  @Input() imageModal: any = undefined;
 }

@@ -32,5 +32,5 @@ import { Component, Input } from '@angular/core';
   styles: [],
 })
 export class ChangeCameraSvg {
-  @Input() imageModal: string = '';
+
 }

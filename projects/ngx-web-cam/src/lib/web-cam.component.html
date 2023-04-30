@@ -1,7 +1,8 @@
 <div class="content">
-  <modal-image *ngIf="imageModal" [imageModal]="imageModal"> </modal-image>
+  <modal-image *ngIf="imageModal" [imageModal]="imageModal">
+  </modal-image>
   <div class="header" *ngIf="isPhoto">
-    <svg-close (click)="close()"></svg-close>
+    <svg-close class="close" (click)="close()"></svg-close>
     <svg-upload
       [ngClass]="{
         show: images.length,
@@ -10,10 +11,7 @@
       class="upload"
       (click)="action()"
     />
-    <svg-poubelle
-      [imageModal]="imageModal"
-      (click)="action()"
-    />
+    <svg-poubelle [imageModal]="imageModal" class="poubelle" (click)="action()" />
   </div>
 
   <!-- Video -->
@@ -23,12 +21,7 @@
   <!-- See Images -->
   <div class="scrolling-wrapper">
     <div class="image" *ngFor="let i of images; let index = index">
-      <img
-        [src]="i"
-        (click)="openModal(i)"
-        style="object-fit: cover"
-        [ngClass]="i === this.imageModal ? 'img-selected' : ''"
-      />
+      <img [src]="i?.base64" (click)="openModal(i)" style="object-fit: cover" />
     </div>
   </div>
 

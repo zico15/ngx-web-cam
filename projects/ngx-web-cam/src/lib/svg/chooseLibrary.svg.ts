@@ -47,5 +47,5 @@ import { Component, Input } from '@angular/core';
   ],
 })
 export class ChooseLibrarySvg {
-  @Input() imageModal: string = '';
+ 
 }
