@@ -22,4 +22,4 @@ import { UploadSvg } from './svg/upload.svg';
   imports: [FormsModule, CommonModule],
   exports: [WebCamComponent],
 })
-export class WebCamModule {}
+export class CameraModule {}
