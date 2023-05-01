@@ -1,6 +1,5 @@
 <div class="content">
-  <modal-image *ngIf="imageModal" [imageModal]="imageModal">
-  </modal-image>
+  <modal-image *ngIf="imageModal" [imageModal]="imageModal"> </modal-image>
   <div class="header" *ngIf="isPhoto">
     <svg-close class="close" (click)="close()"></svg-close>
     <svg-upload
@@ -11,7 +10,11 @@
       class="upload"
       (click)="action()"
     />
-    <svg-poubelle [imageModal]="imageModal" class="poubelle" (click)="action()" />
+    <svg-poubelle
+      [imageModal]="imageModal"
+      class="poubelle"
+      (click)="action()"
+    />
   </div>
 
   <!-- Video -->
@@ -27,11 +30,7 @@
 
   <div class="qrcode" *ngIf="isQr">
     <div class="qrcode-square"></div>
-    <img
-      (click)="close()"
-      class="qrcode-close"
-      src="assets/close-outline.svg"
-    />
+    <svg-close class="qrcode-close" (click)="close()"></svg-close>
   </div>
 
   <div class="footer" *ngIf="isPhoto">

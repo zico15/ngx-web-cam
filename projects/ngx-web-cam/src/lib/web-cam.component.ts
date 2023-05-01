@@ -6,20 +6,19 @@ import {
   Output,
   EventEmitter,
   inject,
-  ViewEncapsulation,
-} from "@angular/core";
-import jsQR from "jsqr";
-import { AnimationService } from "./animations/animation.service";
+} from '@angular/core';
+import jsQR from 'jsqr';
+import { AnimationService } from './animations/animation.service';
 
-export type FacingMode = "user" | "environment";
+export type FacingMode = 'user' | 'environment';
 
 export const resolutions = {
-  "640x480": { width: 640, height: 480 },
-  "1280x720": { width: 1280, height: 720 },
-  "1920x1080": { width: 1920, height: 1080 },
-  "2560x1440": { width: 2560, height: 1440 },
-  "3840x2160": { width: 3840, height: 2160 },
-  "4096x2160": { width: 4096, height: 2160 },
+  '640x480': { width: 640, height: 480 },
+  '1280x720': { width: 1280, height: 720 },
+  '1920x1080': { width: 1920, height: 1080 },
+  '2560x1440': { width: 2560, height: 1440 },
+  '3840x2160': { width: 3840, height: 2160 },
+  '4096x2160': { width: 4096, height: 2160 },
 };
 
 interface responseImage {
@@ -28,20 +27,17 @@ interface responseImage {
 }
 
 @Component({
-  selector: "web-cam",
-  templateUrl: "./web-cam.component.html",
-  styleUrls: ["./web-cam.component.scss"],
-  encapsulation: ViewEncapsulation.Emulated,
+  selector: 'web-cam',
+  templateUrl: './web-cam.component.html',
+  styleUrls: ['./web-cam.component.scss'],
 })
 export class WebCamComponent {
-  @Input() mode: "qrcode" | "photo" = "photo";
+  @Input() mode: 'qrcode' | 'photo' = 'photo';
   @Input() maxImagesAllowed: number = 0;
   @Input() width = 320;
   @Input() height = 500;
-  /** Flag to control whether an ImageData object is stored into the WebcamImage object. */
-  @Input() captureImageData: boolean = false;
   /** The image type to use when capturing snapshots */
-  @Input() imageType: string = "image/png";
+  @Input() imageType: string = 'image/png';
   /** The image quality to use when capturing snapshots (number between 0 and 1) */
   @Input() imageQuality: number = 100;
 
@@ -56,12 +52,13 @@ export class WebCamComponent {
    * @example '3840x2160': { width: { ideal: 3840}, height: { ideal: 2160 } },
    * @example '4096x2160': { width: { ideal: 4096}, height: { ideal: 2160 } },
    */
-  @Input() resolution: { width: number; height: number } = resolutions["1280x720"];
+  @Input() resolution: { width: number; height: number } =
+    resolutions['1280x720'];
 
   /** type facingMode (camera position)
    * @example 'user' | 'environment'
    * */
-  @Input() facingMode: FacingMode = "environment";
+  @Input() facingMode: FacingMode = 'environment';
 
   /** type frameRate
    * @example '15': { ideal: 15 },
@@ -70,9 +67,9 @@ export class WebCamComponent {
    * */
   @Input() frameRate: { ideal: number } = { ideal: 60 };
 
-  @ViewChild("video", { static: true })
+  @ViewChild('video', { static: true })
   private video!: ElementRef<HTMLVideoElement>;
-  @ViewChild("canvas", { static: true })
+  @ViewChild('canvas', { static: true })
   private canvas!: ElementRef<HTMLCanvasElement>;
 
   private videoTrack: MediaStreamTrack | null = null;
@@ -104,28 +101,32 @@ export class WebCamComponent {
 
   constructor() {
     this.animation = inject(AnimationService);
-    console.log(this.imageModal);
   }
 
   /**
    * MediaDevices support check and init camera
    * */
   ngOnInit() {
-    if ("mediaDevices" in navigator) {
+    if ('mediaDevices' in navigator) {
       this.canvas.nativeElement.width = this.resolution.width;
       this.canvas.nativeElement.height = this.resolution.height;
-      this.context = this.canvas.nativeElement.getContext("2d", {
+      this.context = this.canvas.nativeElement.getContext('2d', {
         willReadFrequently: true,
       });
       this.isScanner = this.scanner.observed;
       if (this.isScanner) {
-        this.resolution = resolutions["640x480"];
-        this.video.nativeElement.addEventListener("timeupdate", this.updateScanner.bind(this));
+        this.resolution = resolutions['640x480'];
+        this.video.nativeElement.addEventListener(
+          'timeupdate',
+          this.updateScanner.bind(this)
+        );
       }
       navigator.mediaDevices
         .enumerateDevices()
         .then((devices) => {
-          this.cameras = devices.filter((device) => device.kind === "videoinput");
+          this.cameras = devices.filter(
+            (device) => device.kind === 'videoinput'
+          );
         })
         .finally(() => {
           this.camera_index = this.cameras.length - 1;
@@ -154,7 +155,7 @@ export class WebCamComponent {
 
   public action() {
     if (this.imageModal) {
-      let res = confirm("Deseja realmente excluir este item?");
+      let res = confirm('Deseja realmente excluir este item?');
       if (res) {
         this.images.splice(this.images.indexOf(this.imageModal), 1);
         this.imageModal = this.images[0];
@@ -173,7 +174,9 @@ export class WebCamComponent {
    **/
   public ontoggleFacingMode() {
     this.setFacingMode(
-      this.facingMode === "user" || this.facingMode == null ? "environment" : "user"
+      this.facingMode === 'user' || this.facingMode == null
+        ? 'environment'
+        : 'user'
     );
   }
 
@@ -214,9 +217,13 @@ export class WebCamComponent {
     );
     const uint8ClampedArray = this.imageData?.data;
     if (uint8ClampedArray) {
-      const code = jsQR(uint8ClampedArray, this.resolution.width, this.resolution.height);
+      const code = jsQR(
+        uint8ClampedArray,
+        this.resolution.width,
+        this.resolution.height
+      );
       if (code && code.data.length > 0)
-        this.scanner.emit({ codeType: "qrcode", codeData: code.data });
+        this.scanner.emit({ codeType: 'qrcode', codeData: code.data });
     }
   }
 
@@ -249,15 +256,15 @@ export class WebCamComponent {
     this.videoTrack = stream.getVideoTracks()[0];
     const mode: string[] = this.videoTrack.getCapabilities().facingMode || [];
     if (mode && mode.length > 0) this.facingMode = mode[0] as FacingMode;
-    else this.facingMode = "user";
-    if (this.facingMode === "user")
-      this.video.nativeElement.style.setProperty("transform", "scaleX(-1)");
-    else this.video.nativeElement.style.removeProperty("transform");
+    else this.facingMode = 'user';
+    if (this.facingMode === 'user')
+      this.video.nativeElement.style.setProperty('transform', 'scaleX(-1)');
+    else this.video.nativeElement.style.removeProperty('transform');
     this.canvas.nativeElement.width = this.resolution.width;
     this.canvas.nativeElement.height = this.resolution.height;
     this.video.nativeElement.srcObject = stream;
     // removeTrack when stream ended to avoid memory leak
-    this.stream.addEventListener("ended", () => {
+    this.stream.addEventListener('ended', () => {
       if (this.videoTrack) this.stream?.removeTrack(this.videoTrack);
     });
     if (/Android/i.test(navigator.userAgent)) {
@@ -278,7 +285,8 @@ export class WebCamComponent {
    * @returns
    **/
   async importFile(event: any) {
-    if (event.target.files.length == 0) return alert("Nenhum arquivo selecionado!");
+    if (event.target.files.length == 0)
+      return alert('Nenhum arquivo selecionado!');
     let files: File[] = event.target.files;
     // Adds images to the list
     const DateNow = new Date();
@@ -287,7 +295,7 @@ export class WebCamComponent {
       this.fileToBase64(file).then((base64) => {
         const obj: responseImage = {
           base64: base64,
-          objectKey: DateNow.getTime().toString() + ".png",
+          objectKey: DateNow.getTime().toString() + '.png',
         };
         this.images.unshift(obj);
       });
@@ -301,7 +309,7 @@ export class WebCamComponent {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result?.toString() || "");
+      reader.onload = () => resolve(reader.result?.toString() || '');
       reader.onerror = (error) => reject(error);
     });
   }
@@ -350,7 +358,7 @@ export class WebCamComponent {
    * Returns the current orientation of the device.
    * */
   public getOrientation(): string {
-    return window.innerWidth > window.innerHeight ? "landscape" : "portrait";
+    return window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
   }
 
   /**
@@ -361,36 +369,49 @@ export class WebCamComponent {
    * **/
   public onCapture(): string {
     this.animation.createAnimation();
-    const canvas = document.createElement("canvas");
+    const canvas = document.createElement('canvas');
     // create canvas element
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext('2d');
     if (context != null && this.videoTrack != null) {
       canvas.width = this.videoTrack.getSettings().width || this.width;
       canvas.height = this.videoTrack.getSettings().height || this.height;
-      if (this.facingMode == "user" || this.facingMode == null) {
+      if (this.facingMode == 'user' || this.facingMode == null) {
         // draw video element into canvas
         context.save();
         context.scale(-1, 1); // mirrors the context
-        context.drawImage(this.video.nativeElement, -canvas.width, 0, canvas.width, canvas.height); // draws the mirror video
+        context.drawImage(
+          this.video.nativeElement,
+          -canvas.width,
+          0,
+          canvas.width,
+          canvas.height
+        ); // draws the mirror video
         context.restore();
-      } else context.drawImage(this.video.nativeElement, 0, 0, canvas.width, canvas.height);
+      } else
+        context.drawImage(
+          this.video.nativeElement,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
     }
     // read canvas content as image
     const base64: string = canvas.toDataURL(this.imageType, this.imageQuality);
     const DateNow = new Date();
     const obj: responseImage = {
       base64: base64,
-      objectKey: DateNow.getTime().toString() + ".png",
+      objectKey: DateNow.getTime().toString() + '.png',
     };
     this.images.unshift(obj);
     return base64;
   }
 
   get isQr(): boolean {
-    return this.mode == "qrcode";
+    return this.mode == 'qrcode';
   }
   get isPhoto(): boolean {
-    return this.mode == "photo";
+    return this.mode == 'photo';
   }
   get hasMaxImages() {
     let len = this.images.length;
