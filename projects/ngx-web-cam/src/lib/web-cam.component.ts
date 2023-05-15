@@ -92,7 +92,7 @@ export class WebCamComponent {
 	{codeType: string, codeData: string}
 	 *
 	 */
-  @Output() scanner = new EventEmitter<{
+  @Output() onScanner = new EventEmitter<{
     codeType: string;
     codeData: string;
   }>();
@@ -113,7 +113,7 @@ export class WebCamComponent {
       this.context = this.canvas.nativeElement.getContext('2d', {
         willReadFrequently: true,
       });
-      this.isScanner = this.scanner.observed;
+      this.isScanner = this.onScanner.observed;
       if (this.isScanner) {
         this.resolution = resolutions['640x480'];
         this.video.nativeElement.addEventListener(
@@ -223,7 +223,7 @@ export class WebCamComponent {
         this.resolution.height
       );
       if (code && code.data.length > 0)
-        this.scanner.emit({ codeType: 'qrcode', codeData: code.data });
+        this.onScanner.emit({ codeType: 'qrcode', codeData: code.data });
     }
   }
 

@@ -18,7 +18,7 @@
   </div>
 
   <!-- Video -->
-  <video #video autoplay muted playsinline></video>
+  <video #video autoplay muted playsinline [class.video_qrcode]="mode == 'qrcode'"></video>
   <!-- Qrcode -->
   <canvas #canvas style="visibility: hidden"></canvas>
   <!-- See Images -->
