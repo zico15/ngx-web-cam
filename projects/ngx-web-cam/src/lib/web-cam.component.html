@@ -8,17 +8,25 @@
         hide: !images.length || this.imageModal
       }"
       class="upload"
+      data-cy="upload"
       (click)="action()"
     />
     <svg-poubelle
       [imageModal]="imageModal"
       class="poubelle"
+      data-cy="poubelle"
       (click)="action()"
     />
   </div>
 
   <!-- Video -->
-  <video #video autoplay muted playsinline [class.video_qrcode]="mode == 'qrcode'"></video>
+  <video
+    #video
+    autoplay
+    muted
+    playsinline
+    [class.video_qrcode]="mode == 'qrcode'"
+  ></video>
   <!-- Qrcode -->
   <canvas #canvas style="visibility: hidden"></canvas>
   <!-- See Images -->
@@ -30,11 +38,19 @@
 
   <div class="qrcode" *ngIf="isQr">
     <div class="qrcode-square"></div>
-    <svg-close class="qrcode-close" (click)="close()"></svg-close>
+    <svg-close
+      class="qrcode-close"
+      data-cy="qrcode-close"
+      (click)="close()"
+    ></svg-close>
   </div>
 
   <div class="footer" *ngIf="isPhoto">
-    <div class="footer-button-galery" (click)="fileUpload.click()">
+    <div
+      class="footer-button-galery"
+      data-cy="footer-button-galery"
+      (click)="fileUpload.click()"
+    >
       <svg-choose-library></svg-choose-library>
       <input
         #fileUpload
@@ -49,13 +65,18 @@
     <div
       class="footer-button-takePicture"
       (click)="onCapture()"
+      data-cy="footer-button-takePicture"
       *ngIf="!hasMaxImages"
     >
       <div class="circle"></div>
     </div>
     <span *ngIf="hasMaxImages">Limite máximo atingido</span>
 
-    <div class="footer-button-changeCamera" (click)="ontoggleFacingMode()">
+    <div
+      class="footer-button-changeCamera"
+      data-cy="footer-button-changeCamera"
+      (click)="ontoggleFacingMode()"
+    >
       <svg-change-camera></svg-change-camera>
     </div>
   </div>
