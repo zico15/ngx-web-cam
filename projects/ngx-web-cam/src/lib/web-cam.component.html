@@ -1,20 +1,24 @@
 <div class="content">
   <modal-image *ngIf="imageModal" [imageModal]="imageModal"> </modal-image>
   <div class="header" *ngIf="isPhoto">
-    <svg-close class="close" (click)="close()"></svg-close>
+    <svg-close
+      class="close"
+      data-cy="webcam-close"
+      (click)="close()"
+    ></svg-close>
     <svg-upload
       [ngClass]="{
         show: images.length,
         hide: !images.length || this.imageModal
       }"
       class="upload"
-      data-cy="upload"
+      data-cy="webcam-upload"
       (click)="action()"
     />
     <svg-poubelle
       [imageModal]="imageModal"
       class="poubelle"
-      data-cy="poubelle"
+      data-cy="webcam-poubelle"
       (click)="action()"
     />
   </div>
@@ -40,7 +44,7 @@
     <div class="qrcode-square"></div>
     <svg-close
       class="qrcode-close"
-      data-cy="qrcode-close"
+      data-cy="webcam-qrcode-close"
       (click)="close()"
     ></svg-close>
   </div>
@@ -48,7 +52,7 @@
   <div class="footer" *ngIf="isPhoto">
     <div
       class="footer-button-galery"
-      data-cy="footer-button-galery"
+      data-cy="webcam-footer-button-galery"
       (click)="fileUpload.click()"
     >
       <svg-choose-library></svg-choose-library>
@@ -65,7 +69,7 @@
     <div
       class="footer-button-takePicture"
       (click)="onCapture()"
-      data-cy="footer-button-takePicture"
+      data-cy="webcam-footer-button-takePicture"
       *ngIf="!hasMaxImages"
     >
       <div class="circle"></div>
@@ -74,7 +78,7 @@
 
     <div
       class="footer-button-changeCamera"
-      data-cy="footer-button-changeCamera"
+      data-cy="webcam-footer-button-changeCamera"
       (click)="ontoggleFacingMode()"
     >
       <svg-change-camera></svg-change-camera>
