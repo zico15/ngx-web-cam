@@ -98,6 +98,7 @@ export class WebCamComponent {
   }>();
   @Output() onSubmit = new EventEmitter<responseImage[]>();
   @Output() onClose = new EventEmitter<responseImage[]>();
+  @Output() onRemove = new EventEmitter<responseImage>();
 
   constructor() {
     this.animation = inject(AnimationService);
@@ -147,9 +148,12 @@ export class WebCamComponent {
   public close() {
     if (this.imageModal) {
       this.imageModal = undefined;
-    } else if (!this.images.length || confirm("Deseja realmente excluir este item?"))
-    {  
-      this.onClose.emit(this.images);}
+    } else if (
+      !this.images.length ||
+      confirm('Deseja realmente excluir este item?')
+    ) {
+      this.onClose.emit(this.images);
+    }
     this.animation.moveScrollingWrapperTop();
   }
 
@@ -158,6 +162,7 @@ export class WebCamComponent {
       let res = confirm('Deseja realmente excluir este item?');
       if (res) {
         this.images.splice(this.images.indexOf(this.imageModal), 1);
+        this.onRemove.emit(this.imageModal);
         this.imageModal = this.images[0];
       }
       if (!this.images.length) this.animation.moveScrollingWrapperTop();
