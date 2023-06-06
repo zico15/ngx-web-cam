@@ -26,6 +26,10 @@ interface responseImage {
   objectKey: string;
 }
 
+export interface responseWebCam {
+  images: responseImage[];
+  component: WebCamComponent;
+}
 @Component({
   selector: 'web-cam',
   templateUrl: './web-cam.component.html',
@@ -96,9 +100,9 @@ export class WebCamComponent {
     codeType: string;
     codeData: string;
   }>();
-  @Output() onSubmit = new EventEmitter<responseImage[]>();
-  @Output() onClose = new EventEmitter<responseImage[]>();
-  @Output() onRemove = new EventEmitter<responseImage>();
+  @Output() onSubmit = new EventEmitter<responseWebCam>();
+  @Output() onClose = new EventEmitter<responseWebCam>();
+  @Output() onRemove = new EventEmitter<responseWebCam>();
 
   constructor() {
     this.animation = inject(AnimationService);
@@ -148,25 +152,22 @@ export class WebCamComponent {
   public close() {
     if (this.imageModal) {
       this.imageModal = undefined;
-    } else if (
-      !this.images.length ||
-      confirm('Deseja realmente excluir este item?')
-    ) {
-      this.onClose.emit(this.images);
+    } else {
+      this.onClose.emit({ images: this.images, component: this });
     }
     this.animation.moveScrollingWrapperTop();
   }
 
   public action() {
     if (this.imageModal) {
-      let res = confirm('Deseja realmente excluir este item?');
-      if (res) {
-        this.images.splice(this.images.indexOf(this.imageModal), 1);
-        this.onRemove.emit(this.imageModal);
-        this.imageModal = this.images[0];
-      }
-      if (!this.images.length) this.animation.moveScrollingWrapperTop();
-    } else this.onSubmit.emit(this.images);
+      this.onRemove.emit({ images: [this.imageModal], component: this });
+    } else this.onSubmit.emit({ images: this.images, component: this });
+  }
+
+  public remove(...image: responseImage[]) {
+    this.images = this.images.filter((i) => !image.includes(i));
+    this.imageModal = this.images[0];
+    if (!this.images.length) this.animation.moveScrollingWrapperTop();
   }
 
   openModal(i: responseImage) {
