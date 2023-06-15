@@ -38,12 +38,9 @@ import { Component, Input } from '@angular/core';
   styles: [
     `
       .poubelle {
-        position: absolute;
-        height: 10vw;
-        padding: 8px;
-        margin-top: 2.8vh;
-        margin-right: 3.5vh;
-        right: 0;
+        display: flex;
+        position: relative;
+        padding: 1rem;
         border-radius: 50%;
         background-color: #9f0000;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.42);

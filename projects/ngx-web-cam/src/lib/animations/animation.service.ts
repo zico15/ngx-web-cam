@@ -16,24 +16,29 @@ export class AnimationService {
   }
 
   async moveScrollingWrapperBottom() {
-    const scrollingWrapper = document.querySelector(
-      '.scrolling-wrapper'
-    ) as HTMLElement;
-    const footer = document.querySelector('.footer') as HTMLElement;
-    scrollingWrapper.classList.add('move-scrollWrapper-bottom');
-    scrollingWrapper.classList.remove('move-scrollWrapper-top');
-    footer.style.filter = 'blur(0px)';
-    footer.classList.add('gradual-blur');
-    footer.classList.remove('rm-gradual-blur');
+    if (!window.matchMedia('(orientation: landscape)').matches) {
+      // Screen is in landscape orientation
+      const scrollingWrapper = document.querySelector(
+        '.scrolling-wrapper'
+      ) as HTMLElement;
+      const footer = document.querySelector('.footer') as HTMLElement;
+      scrollingWrapper.classList.add('move-scrollWrapper-bottom');
+      scrollingWrapper.classList.remove('move-scrollWrapper-top');
+      footer.style.filter = 'blur(0px)';
+      footer.classList.add('gradual-blur');
+      footer.classList.remove('rm-gradual-blur');
+    }
   }
   async moveScrollingWrapperTop() {
-    const scrollingWrapper = document.querySelector(
-      '.scrolling-wrapper'
-    ) as HTMLElement;
-    scrollingWrapper.classList.add('move-scrollWrapper-top');
-    const footer = document.querySelector('.footer') as HTMLElement;
-    footer.classList.add('rm-gradual-blur');
-    footer.classList.remove('gradual-blur');
+    if (!window.matchMedia('(orientation: landscape)').matches) {
+      const scrollingWrapper = document.querySelector(
+        '.scrolling-wrapper'
+      ) as HTMLElement;
+      scrollingWrapper.classList.add('move-scrollWrapper-top');
+      const footer = document.querySelector('.footer') as HTMLElement;
+      footer.classList.add('rm-gradual-blur');
+      footer.classList.remove('gradual-blur');
+    }
   }
 
   wait(ms: number) {

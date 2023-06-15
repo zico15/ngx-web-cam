@@ -6,21 +6,23 @@
       data-cy="webcam-close"
       (click)="close()"
     ></svg-close>
-    <svg-upload
-      [ngClass]="{
-        show: images.length,
-        hide: !images.length || this.imageModal
-      }"
-      class="upload"
-      data-cy="webcam-upload"
-      (click)="action()"
-    />
-    <svg-poubelle
-      [imageModal]="imageModal"
-      class="poubelle"
-      data-cy="webcam-poubelle"
-      (click)="action()"
-    />
+    <div>
+      <svg-upload
+        [ngClass]="{
+          show: images.length,
+          hide: !images.length || this.imageModal
+        }"
+        class="upload"
+        data-cy="webcam-upload"
+        (click)="action()"
+      />
+      <svg-poubelle
+        [imageModal]="imageModal"
+        class="poubelle"
+        data-cy="webcam-poubelle"
+        (click)="action()"
+      />
+    </div>
   </div>
 
   <!-- Video -->

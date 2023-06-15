@@ -33,7 +33,7 @@ export interface responseWebCam {
 @Component({
   selector: 'web-cam',
   templateUrl: './web-cam.component.html',
-  styleUrls: ['./web-cam.component.scss'],
+  styleUrls: ['./web-cam.component.scss', 'web-cam-rotation.component.scss'],
 })
 export class WebCamComponent {
   @Input() mode: 'qrcode' | 'photo' = 'photo';
