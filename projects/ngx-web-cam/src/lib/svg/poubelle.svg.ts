@@ -40,7 +40,9 @@ import { Component, Input } from '@angular/core';
       .poubelle {
         display: flex;
         position: relative;
-        padding: 1rem;
+        padding: 0.5rem;
+        width: 1.5rem;
+        margin: 0.7rem;
         border-radius: 50%;
         background-color: #9f0000;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.42);
