@@ -295,13 +295,11 @@ export class WebCamComponent {
       return alert('Nenhum arquivo selecionado!');
     let files: File[] = event.target.files;
     // Adds images to the list
-    const DateNow = new Date();
     for (let file of files) {
-      DateNow.setMilliseconds(DateNow.getMilliseconds() + 1);
       this.fileToBase64(file).then((base64) => {
         const obj: responseImage = {
           base64: base64,
-          objectKey: DateNow.getTime().toString() + '.png',
+          objectKey: new Date().toISOString() + '.png',
         };
         this.images.unshift(obj);
       });
