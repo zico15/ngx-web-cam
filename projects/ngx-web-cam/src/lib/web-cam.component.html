@@ -1,12 +1,12 @@
 <div class="content">
   <modal-image *ngIf="imageModal" [imageModal]="imageModal"> </modal-image>
-  <div class="header" *ngIf="isPhoto">
+  <div class="header">
     <svg-close
       class="close"
       data-cy="webcam-close"
       (click)="close()"
     ></svg-close>
-    <div>
+    <div *ngIf="isPhoto">
       <svg-upload
         [ngClass]="{
           show: images.length,
