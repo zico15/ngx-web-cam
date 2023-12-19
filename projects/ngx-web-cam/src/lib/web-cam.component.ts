@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import jsQR from 'jsqr';
 import { AnimationService } from './animations/animation.service';
-import { NgxImageCompressService } from 'ngx-image-compress';
 
 export type FacingMode = 'user' | 'environment';
 
@@ -105,7 +104,7 @@ export class WebCamComponent {
   @Output() onClose = new EventEmitter<responseWebCam>();
   @Output() onRemove = new EventEmitter<responseWebCam>();
 
-  constructor(private compress: NgxImageCompressService) {
+  constructor() {
     this.animation = inject(AnimationService);
   }
 
@@ -299,7 +298,7 @@ export class WebCamComponent {
     for (let file of files) {
       this.fileToBase64(file).then(async (base64) => {
         const obj: responseImage = {
-          base64: await this.compress.compressFile(base64, 1, 50, 50),
+          base64,
           objectKey: new Date().toISOString() + '.png',
         };
         this.images.unshift(obj);
