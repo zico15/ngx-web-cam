@@ -1,6 +1,6 @@
 {
   "name": "ngx-webcam-controller",
-  "version": "0.1.25",
+  "version": "0.1.28",
   "author": "zico15",
   "contributors": [],
   "license": "MIT",
@@ -9,8 +9,8 @@
     "url": "https://github.com/zico15/ngx-web-cam.git"
   },
   "peerDependencies": {
-    "@angular/common": "^16.1.7",
-    "@angular/core": "^16.1.7"
+    "@angular/common": "^18.2.13",
+    "@angular/core": "^18.2.13"
   },
   "dependencies": {
     "jsqr": "^1.4.0",
